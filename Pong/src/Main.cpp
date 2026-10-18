@@ -13,8 +13,8 @@ int cpu_score = 0;
 class Ball
 {
 public:
+	Vector2 ballVeloicty = { -6, -6 };
 	float x, y;
-	int speed_x, speed_y;
 	int radius;
 
 	void Draw()
@@ -24,12 +24,13 @@ public:
 
 	void Update()
 	{
-		x += speed_x;
-		y += speed_y;
+		x += ballVeloicty.x;
+		y += ballVeloicty.y;
 
 		if (y + radius >= GetScreenHeight() || y - radius <= 0)
 		{
-			speed_y *= -1;
+			ballVeloicty.y *= -1;
+			//ballVeloicty.x *= -1;
 		}
 		if (x + radius >= GetScreenWidth())
 		{
@@ -48,9 +49,9 @@ public:
 		x = GetScreenWidth() / 2;
 		y = GetScreenHeight() / 2;
 		
-		int speed_choices[2] = { -1, 1 };
-		speed_x *= speed_choices[GetRandomValue(0, 1)];
-		speed_y *= speed_choices[GetRandomValue(0, 1)];
+		int speed_choices[2] = { -6, 6 };
+		ballVeloicty.x = speed_choices[GetRandomValue(0, 1)];
+		ballVeloicty.y = speed_choices[GetRandomValue(0, 1)];
 	 
 	}
 };
@@ -96,34 +97,31 @@ public:
 
 };
 
+Ball ball;
+Paddle player;
+
+
 class CpuPaddle : public Paddle
 {
 public:
 	void Update(float ball_y)
 	{
 			
-	
-		
-		
-			if (y + height / 2 < ball_y + GetRandomValue(70, 150))
-			{
-				y += speed;
-			}
-			else if (y + height / 2 > ball_y - GetRandomValue(70, 150))
-			{
-				y -= speed;
-			}
-		
+
+		float paddleCenter = y + height / 2.0f;
+		float deadZone = GetRandomValue(60, 100);
+
+		if (paddleCenter < ball_y - deadZone)
+			y += speed;
+		else if (paddleCenter > ball_y + deadZone)
+			y -= speed;
 
 		LimitMovement();
 		
 	}
 }; //height / 2 != ball_y
 
-Ball ball;
-Paddle player;
 CpuPaddle cpu;
-
 
 int main()
 {
@@ -139,8 +137,7 @@ int main()
 	ball.radius = 20;
 	ball.x = screen_width / 2;
 	ball.y = screen_height / 2;
-	ball.speed_x = 7;
-	ball.speed_y = 7;
+
 
 	player.width = 25;
 	player.height = 120;
@@ -171,14 +168,28 @@ int main()
 		
 		if (CheckCollisionCircleRec(Vector2 {ball.x, ball.y}, ball.radius, Rectangle {player.x, player.y, player.width, player.height}))
 		{
-			ball.speed_x *= -1;
-			ball.speed_y *= -1;
+			ball.x = player.x - ball.radius;
+
+			float paddleCenter = player.y + player.height / 2.0f;
+
+			float hitOffset =
+				(ball.y - paddleCenter) / (player.height / 2.0f);
+
+			ball.ballVeloicty.x = -7.0f;
+			ball.ballVeloicty.y = hitOffset * 7.0f;
 			PlaySound(paddle_bounce);
 		}
 		if (CheckCollisionCircleRec(Vector2{ ball.x, ball.y }, ball.radius, Rectangle{ cpu.x, cpu.y, cpu.width, cpu.height }))
 		{
-			ball.speed_x *= -1;
-			ball.speed_y *= -1;
+			ball.x = cpu.x + cpu.width + ball.radius;
+
+			float paddleCenter = ball.y + cpu.height / 2.0f;
+
+			float hitOffset =
+				(ball.y - paddleCenter) / (cpu.height / 2.0f);
+
+			ball.ballVeloicty.x = 7.0f;
+			ball.ballVeloicty.y = hitOffset * 7.0f;
 
 			PlaySound(paddle_bounce);
 		}
