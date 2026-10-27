@@ -17,7 +17,7 @@ A simple two-paddle Pong game built with C++ and [raylib](https://www.raylib.com
 2. Install [vcpkg](https://github.com/microsoft/vcpkg), then install raylib:
 
    ```powershell
-   vcpkg install raylib:x64-windows
+   vcpkg install raylib:x64-windows --head
    vcpkg integrate install
    ```
 
