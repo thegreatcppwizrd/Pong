@@ -209,6 +209,7 @@ int main()
 	SetSoundVolume(paddle_bounce, 10.0f);
 
 
+
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
@@ -225,6 +226,57 @@ int main()
 
 			//Drawing 
 			ClearBackground(Dark_Green);
+
+			struct Exit
+			{
+				float width = 100.0f;
+				float height = 100.0f;
+				float margin = 25.0f;
+
+				Vector2 position = { margin, margin };
+				Rectangle button = { position.x, position.y, width , height };
+			};
+
+			Exit exit;
+
+			DrawRectangle(exit.position.x, exit.position.y, exit.width, exit.height, Light_Green);
+			
+			struct Exit_Text
+			{
+				const int font_size = 50;
+				const float spacing = 5.0f;
+				const char* text = "Exit";
+
+				Vector2 text_size = { MeasureTextEx(
+					GetFontDefault(),
+					text,
+					(float)font_size,
+					spacing
+) };
+				Vector2 position = { (100.0f / 2.0f) + 25.0f - (text_size.x / 2.0f), (100.0f / 2.0f) + 25.0f - (text_size.y / 2.0f) };
+
+			};
+
+			if (CheckCollisionPointRec(GetMousePosition(), exit.button))
+			{
+
+				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+				{
+					gameplay.game_active = false;
+				}
+			}
+
+			Exit_Text exit_text;
+
+			DrawTextEx(
+
+				GetFontDefault(),
+				exit_text.text,
+				exit_text.position,
+				exit_text.font_size,
+				exit_text.spacing,
+				Dark_Green
+			);
 
 			DrawRectangle(screen_width / 2, 0, screen_width / 2, screen_height, Green);
 			DrawCircle(screen_width / 2, screen_height / 2, 150, Light_Green);
@@ -321,6 +373,8 @@ int main()
 			}
 			
 		}
+
+
 
 		EndDrawing();
 	}
