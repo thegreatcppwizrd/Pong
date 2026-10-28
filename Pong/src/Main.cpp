@@ -241,10 +241,11 @@ int main()
 		{
 			struct Play_Button
 			{
-				const int width = 500.0f;
-				const int height = 170.0f;
+				int width = 500.0f;
+				int height = 170.0f;
 				const int x = GetScreenWidth() / 2 - width / 2;
 				const int y = GetScreenHeight() / 2 - height / 2;
+				const char* text = "Play";
 			};
 			
             Play_Button play_button;
@@ -256,26 +257,63 @@ int main()
 				const int x = (GetScreenWidth() - width) / 2;
 				const int y = GetScreenHeight() / 2 - height / 2;
 
-				const int font_size = 170;
+				const int font_size = 120;
+				const float spacing = 10.0f;
+				const char* text = "Play";
 
+				Vector2 text_size = { MeasureTextEx(
+					GetFontDefault(),
+					text,
+					(float)font_size,
+					spacing
+) };
+				Vector2 position = { (GetScreenWidth() / 2.0f) - (text_size.x / 2.0f), (GetScreenHeight() / 2.0f) - (text_size.y / 2.0f) };
+
+			};
+
+			struct Game_Title
+			{
+				const float spacing = 10.0f;
+				const int width = 500.0f;
+				const int height = 170.0f;
+				const int x = (GetScreenWidth() - width) / 2;
+				const int y = GetScreenHeight() / 2 - height / 2;
+
+				const int font_size = 170;
+				const char* text = "Pong";
+				int text_width = MeasureText(text, font_size);
+
+				Vector2 text_size = { MeasureTextEx(
+					GetFontDefault(),
+					text,
+					(float)font_size,
+					spacing
+) };
+				Vector2 position = { (GetScreenWidth() / 2.0f) - (text_size.x / 2.0f), (GetScreenHeight() / 2.0f) - (text_size.y / 2.0f) };
 
 			};
 
 			Play_Text play_text;
+			Game_Title game_title;
 
 			ClearBackground(Dark_Green);
 			DrawRectangle(screen_width / 2, 0, screen_width / 2, screen_height, Green);
 			DrawCircle(screen_width / 2, screen_height / 2, 150, Light_Green);
 
-			Rectangle button = { play_button.x, play_button.y + 200, play_button.width, play_button.height };
+			Rectangle button = { play_button.x, play_button.y + 150, play_button.width, play_button.height };
 			DrawRectangleRec(button, { 104, 252, 190, 255 });
-			DrawText("Play", play_text.x, play_text.y + 200, play_text.font_size, WHITE);
-			DrawText("Pong", play_text.x, play_text.y - 200, play_text.font_size, WHITE);
+			DrawTextEx(
+				GetFontDefault(), play_text.text, { play_text.position.x, play_text.position.y + 150 }, play_text.font_size, play_text.spacing, WHITE
+			);
+			DrawTextEx(
+				GetFontDefault(), game_title.text, { game_title.position.x, game_title.position.y - 75 }, game_title.font_size, game_title.spacing, WHITE
+			);
 
 			Vector2 mouse_pos = { GetMousePosition() };
 
 			if (CheckCollisionPointRec(mouse_pos, button))
 			{
+
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 				{
 					gameplay.game_active = true;
