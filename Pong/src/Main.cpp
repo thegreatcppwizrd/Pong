@@ -149,8 +149,6 @@ struct Gameplay
 		cpu.y = screen_height / 2 - player.height / 2;
 		cpu.speed = 7;
 
-
-
 	}
 
 	void update(Ball& ball, Paddle& player, CpuPaddle& cpu)
@@ -189,6 +187,29 @@ struct Gameplay
 
 			PlaySound(paddle_bounce);
 		}
+	}
+
+	void Reset_Game(Ball& ball, Paddle& player, CpuPaddle& cpu)
+	{
+		ball.radius = 20;
+		ball.x = GetScreenWidth() / 2;
+		ball.y = GetScreenHeight() / 2;
+
+
+		player.width = 25;
+		player.height = 120;
+		player.x = GetScreenWidth() - player.width - 10;
+		player.y = GetScreenHeight() / 2 - player.height / 2;
+		player.speed = 7;
+
+		cpu.width = 25;
+		cpu.height = 120;
+		cpu.x = 10;
+		cpu.y = GetScreenHeight() / 2 - player.height / 2;
+		cpu.speed = 7;
+
+        cpu_score = 0;
+		player_score = 0;
 	}
 };
 
@@ -239,11 +260,11 @@ int main()
 
 			Exit exit;
 
-			DrawRectangle(exit.position.x, exit.position.y, exit.width, exit.height, Light_Green);
+			DrawRectangleRounded(exit.button, 1, 0, Light_Green);
 			
 			struct Exit_Text
 			{
-				const int font_size = 50;
+				const int font_size = 40;
 				const float spacing = 5.0f;
 				const char* text = "Exit";
 
@@ -263,6 +284,7 @@ int main()
 				if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
 				{
 					gameplay.game_active = false;
+					gameplay.Reset_Game(ball, player, cpu);
 				}
 			}
 
