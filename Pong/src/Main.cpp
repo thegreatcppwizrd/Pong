@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include <string>
 
-Color Green = Color{ 38, 185, 154, 255 }; 
+Color Green = Color{ 38, 185, 154, 255 };
 Color Dark_Green = Color{ 20, 160, 133, 255 };
 Color Light_Green = Color{ 129, 204, 184, 255 };
 Color Yellow = Color{ 243, 213, 91, 255 };
@@ -49,11 +49,11 @@ public:
 	{
 		x = GetScreenWidth() / 2;
 		y = GetScreenHeight() / 2;
-		
+
 		int speed_choices[2] = { -6, 6 };
 		ballVeloicty.x = speed_choices[GetRandomValue(0, 1)];
 		ballVeloicty.y = speed_choices[GetRandomValue(0, 1)];
-	 
+
 	}
 };
 
@@ -103,7 +103,7 @@ class CpuPaddle : public Paddle
 public:
 	void Update(float ball_y)
 	{
-			
+
 
 		float paddleCenter = y + height / 2.0f;
 		float deadZone = GetRandomValue(60, 100);
@@ -114,7 +114,7 @@ public:
 			y -= speed;
 
 		LimitMovement();
-		
+
 	}
 }; //height / 2 != ball_y
 
@@ -208,7 +208,7 @@ struct Gameplay
 		cpu.y = GetScreenHeight() / 2 - player.height / 2;
 		cpu.speed = 7;
 
-        cpu_score = 0;
+		cpu_score = 0;
 		player_score = 0;
 	}
 };
@@ -238,7 +238,7 @@ int main()
 		if (gameplay.game_active)
 		{
 			//Updating
-	
+
 			gameplay.update(ball, player, cpu);
 
 			//Checking for colision
@@ -261,7 +261,7 @@ int main()
 			Exit exit;
 
 			DrawRectangleRounded(exit.button, 1, 0, Light_Green);
-			
+
 			struct Exit_Text
 			{
 				const int font_size = 40;
@@ -321,8 +321,8 @@ int main()
 				const int y = GetScreenHeight() / 2 - height / 2;
 				const char* text = "Play";
 			};
-			
-            Play_Button play_button;
+
+			Play_Button play_button;
 
 			struct Play_Text
 			{
@@ -393,7 +393,7 @@ int main()
 					gameplay.game_active = true;
 				}
 			}
-			
+
 		}
 
 
