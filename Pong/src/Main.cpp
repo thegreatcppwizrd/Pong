@@ -226,7 +226,7 @@ int main()
 	const int screen_height = 800;
 
 	gameplay.init(screen_width, screen_height, ball, player, cpu);
-	Sound paddle_bounce = LoadSound("./resources/paddleBounce.mp3");
+	Sound paddle_bounce = LoadSound(RESOURCES_PATH "paddleBounce.mp3");
 	SetSoundVolume(paddle_bounce, 10.0f);
 
 
