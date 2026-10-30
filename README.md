@@ -12,7 +12,7 @@ A simple two-paddle Pong game built with C++ and [raylib](https://www.raylib.com
 ![Pong gameplay](assets/pong-gameplay.gif)
 
 
-# Requirements
+## Requirements
 
 Git
 
@@ -24,7 +24,7 @@ Ninja (included with Visual Studio's CMake tools, if configured)
 
 Dependencies: raylib 6.2 is included in this repository under thirdParty/raylib-6.2. You do not need vcpkg or a separate raylib installation.
 
-# Getting Started
+## Getting Started
 
 1. Clone the repository
 
@@ -55,7 +55,7 @@ On Windows, run:
 
 If your CMake executable target has a different name, replace main1.exe with the executable's actual name.
 
-# Getting Updates
+## Getting Updates
 
 If you have already cloned the repository, open a terminal in the project directory and run:
 
