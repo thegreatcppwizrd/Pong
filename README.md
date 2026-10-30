@@ -2,8 +2,6 @@
 
 A simple two-paddle Pong game built with C++ and [raylib](https://www.raylib.com/).
 
-![Pong gameplay](assets/pong-gameplay.gif)
-
 ## How to play
 
 - Use the **Up** and **Down** arrow keys to move the right paddle.
@@ -11,49 +9,60 @@ A simple two-paddle Pong game built with C++ and [raylib](https://www.raylib.com
 - Score by getting the ball past the computer paddle.
 - Close the game window to quit.
 
-## Run on Windows
+![Pong gameplay](assets/pong-gameplay.gif)
 
-1. Install Visual Studio with the **Desktop development with C++** workload.
-2. Install [vcpkg](https://github.com/microsoft/vcpkg), then install raylib:
 
-   ```powershell
-   vcpkg install raylib:x64-windows --head
-   vcpkg integrate install
-   ```
+# Requirements
 
-3. Open `Pong.slnx` in Visual Studio.
-4. Select the **x64** platform and **Debug** or **Release** configuration.
-5. Build and run the project with **Ctrl+F5**.
+Git
 
-The build copies `Pong/resources` next to the executable so the paddle sound can load correctly.
+CMake 3.22 or newer
 
-## Run on macOS
+Visual Studio 2022 or newer with the Desktop development with C++ workload, including MSVC and Windows SDK
 
-Install the command-line tools, Homebrew, and raylib:
+Ninja (included with Visual Studio's CMake tools, if configured)
 
-```bash
-xcode-select --install
-brew install raylib
-```
+Dependencies: raylib 6.2 is included in this repository under thirdParty/raylib-6.2. You do not need vcpkg or a separate raylib installation.
 
-From the repository root, compile and run:
+Getting Started
 
-```bash
-mkdir -p build/resources
-clang++ -std=c++20 Pong/src/Main.cpp \
-  -I"$(brew --prefix raylib)/include" \
-  -L"$(brew --prefix raylib)/lib" \
-  -lraylib \
-  -framework OpenGL -framework Cocoa -framework IOKit \
-  -framework CoreVideo -framework CoreAudio \
-  -framework Metal -framework QuartzCore \
-  -o build/pong
-cp Pong/resources/paddleBounce.mp3 build/resources/
-./build/pong
-```
+1. Clone the repository
 
-## Project layout
+Open a terminal and run:
 
-- `Pong/src/Main.cpp` — game source code
-- `Pong/resources/paddleBounce.mp3` — paddle collision sound
-- `Pong.slnx` — Visual Studio solution
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+cd YOUR-REPOSITORY
+
+Replace the URL with your repository's actual GitHub URL.
+
+2. Configure the project
+
+From the repository root, run:
+
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+This configures the project and generates the build files in the build directory.
+
+3. Build the game
+
+cmake --build build
+
+4. Run the game
+
+On Windows, run:
+
+.\build\main1.exe
+
+If your CMake executable target has a different name, replace main1.exe with the executable's actual name.
+
+# Getting Updates
+
+If you have already cloned the repository, open a terminal in the project directory and run:
+
+git pull
+
+Then rebuild the game:
+
+cmake --build build
+
+Run the executable again to play the updated version.
